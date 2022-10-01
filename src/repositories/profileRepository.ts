@@ -1,7 +1,6 @@
 import { prisma } from './../database/prismaClient';
 import { Profile } from '@prisma/client';
 import { CreateProfileData, UpdateProfileData } from '../types/profileTypes';
-import { mapObjectToUpdateQuery } from '../utils/sqlUtils';
 
 export async function findById(id: number):Promise<Profile> {
     return prisma.profile.findUnique({

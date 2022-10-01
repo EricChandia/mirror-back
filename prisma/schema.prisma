@@ -32,6 +32,9 @@ model Profile {
   likeGiven Like[] @relation("whoLiked")
   likeReceived Like[] @relation("whoReceived")
 
+  firstMatch Match[] @relation("firstProfile")
+  secondMatch Match[] @relation("secondProfile")
+
   @@map("profiles")
 }
 
@@ -42,5 +45,20 @@ model Like{
 
   whoLiked Profile @relation(name:"whoLiked", fields: [whoLikedId], references: [id])
   whoReceived Profile @relation(name:"whoReceived", fields: [whoReceivedId], references: [id])
+
+   @@map("likes")
+}
+
+
+
+model Match{
+  id       Int    @id @default(autoincrement())
+  firstProfileId Int
+  secondProfileId Int
+
+  firstProfile Profile @relation(name:"firstProfile", fields: [firstProfileId], references: [id])
+  secondProfile Profile @relation(name:"secondProfile", fields: [secondProfileId], references: [id])
+
+   @@map("matches")
 }
 
