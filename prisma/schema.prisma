@@ -17,5 +17,33 @@ model User {
   email    String @unique
   password String
 
+  profile Profile []
   @@map("users")
 }
+
+
+
+
+model Profile {
+  id       Int    @id @default(autoincrement())
+  name    String @unique
+  occupation String
+  schooling String
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+
+  likeGiven Like[] @relation("whoLiked")
+  likeReceived Like[] @relation("whoReceived")
+
+  @@map("profiles")
+}
+
+model Like{
+  id       Int    @id @default(autoincrement())
+  whoLikedId Int
+  whoReceivedId Int
+
+  whoLiked Profile @relation(name:"whoLiked", fields: [whoLikedId], references: [id])
+  whoReceived Profile @relation(name:"whoReceived", fields: [whoReceivedId], references: [id])
+}
+
