@@ -27,7 +27,7 @@ export async function deleteProfile(id: number) {
 export async function update(id: number, profileData: UpdateProfileData) {
     
 
-    prisma.profile.update({
+    return prisma.profile.update({
         where: {id},
         data: {
            name: profileData.name,
