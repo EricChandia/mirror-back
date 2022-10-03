@@ -1,3 +1,4 @@
+import { Profile } from "@prisma/client";
 import * as profileRepoitory from "../repositories/profileRepository";
 import { CreateProfileData, UpdateProfileData } from "../types/profileTypes";
 import {
@@ -9,11 +10,7 @@ import {
 
 async function getProfile(id: number) {
     
-    const profile = await profileRepoitory.findById(id);
-    if(!profile){
-        throw notFoundError("This profile does not exists");
-    }
-
+    const profile:Profile = await findProfileOrThrow(id);
     return profile;
 }
 
@@ -28,9 +25,8 @@ async function getUserProfile(userId: number) {
 }
 
 async function createProfile(createProfileData: CreateProfileData) {
-    const { userId } = createProfileData;
 
-    const profile = await profileRepoitory.findByUserId(userId);
+    const profile = await profileRepoitory.findByUserId(createProfileData.userId);
     if(profile){
         throw conflictError("Profile already exists for this user");
     }
@@ -39,14 +35,27 @@ async function createProfile(createProfileData: CreateProfileData) {
 }
 
 async function deleteProfile(id: number) {
-    
+    await findProfileOrThrow(id);
+
     return await profileRepoitory.deleteProfile(id);
 
 }
 
 async function updateProfile(id:number, updateProfileData: UpdateProfileData) {
-    
+    await findProfileOrThrow(id);
+
     return await profileRepoitory.update(id, updateProfileData);
+}
+
+
+async function findProfileOrThrow(id: number) {
+    
+    const profile = await profileRepoitory.findById(id);
+    if(!profile){
+        throw notFoundError("This profile does not exists");
+    }
+
+    return profile;
 
 }
 

@@ -25,7 +25,6 @@ export async function getUserProfile(req: Request, res: Response) {
 
 export async function createProfile(req: Request, res: Response) {
     
-    const { userId } = req.params;
     const createProfileData:CreateProfileData = req.body;
 
     const profileCreated = await profileService.createProfile(createProfileData);
@@ -44,7 +43,7 @@ export async function deleteProfile(req: Request, res: Response) {
 }
 
 export async function updateProfile(req: Request, res: Response) {
-    const { userId } = req.params;
+    const { id } = req.params;
     const updateProfileData:UpdateProfileData = req.body;
 
     const updatedProfile = await profileService.updateProfile(Number(id), updateProfileData);
