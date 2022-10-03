@@ -9,6 +9,14 @@ export async function findById(id: number):Promise<Profile> {
 }
 
 
+export async function findByUserId(userId: number):Promise<Profile> {
+  return prisma.profile.findFirst({
+    where: { userId }
+  });
+}
+
+
+
 
 export async function insertProfile(profile: CreateProfileData) {
     return prisma.profile.create({
