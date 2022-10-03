@@ -28,11 +28,11 @@ export async function getLikesByProfileId(whoLikedId: number) {
 //select * from likes where "whoLikedId" = 2 and "whoReceivedId" = 1;
 //whoLiked = profile da pessoa que eu curti
 //whoReceived = minha profile
-export async function checkIfItMatch(profileId: number, whoLikedId: number) {
+export async function checkIfItMatch(userProfileId: number, likeGivenProfileId: number) {
     return prisma.like.findMany({
       where: {
-        whoLikedId: whoLikedId,
-        whoReceivedId: profileId
+        whoLikedId: likeGivenProfileId,
+        whoReceivedId: userProfileId
       }
     });
 }

@@ -3,13 +3,13 @@ import { createProfile, deleteProfile, getUserProfile, updateProfile } from '../
 import { validateSchema } from '../middlewares/schemaMiddleware';
 import { createProfileSchema, updateProfileSchema } from '../schemas/profileSchema';
 
-const authRouter = Router();
+const profileRouter = Router();
 
-authRouter.get('/getUserProfile/:userId', getUserProfile);
-authRouter.post('/createProfile/:userId', validateSchema(createProfileSchema), createProfile);
-authRouter.delete('/deleteProfile/:userId', deleteProfile);
-authRouter.post('/updateProfile/:userId', validateSchema(updateProfileSchema), updateProfile);
+profileRouter.get('/getUserProfile/:userId', getUserProfile);
+profileRouter.post('/createProfile', validateSchema(createProfileSchema), createProfile);
+profileRouter.delete('/deleteProfile/:id', deleteProfile);
+profileRouter.post('/updateProfile/:id', validateSchema(updateProfileSchema), updateProfile);
 
 
 
-export default authRouter;
+export default profileRouter;

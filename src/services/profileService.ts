@@ -48,7 +48,7 @@ async function updateProfile(id:number, updateProfileData: UpdateProfileData) {
 }
 
 
-async function findProfileOrThrow(id: number) {
+export async function findProfileOrThrow(id: number) {
     
     const profile = await profileRepoitory.findById(id);
     if(!profile){
