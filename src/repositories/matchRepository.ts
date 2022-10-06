@@ -17,7 +17,7 @@ export async function insertMatch(match: CreateMatchData) {
 }
 
 
-export async function getAllMatchsByProfile(profileId: number) {
+export async function getAllProfileMatchs(profileId: number) {
   return prisma.match.findMany({
     where: {id: profileId}
   });
