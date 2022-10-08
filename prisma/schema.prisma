@@ -35,7 +35,7 @@ model Profile {
   firstMatch Match[] @relation("firstProfile")
   secondMatch Match[] @relation("secondProfile")
 
-  photos Photos []
+  photos Photo []
 
   @@map("profiles")
 }
@@ -65,9 +65,11 @@ model Match{
 }
 
 
-model Photos{
+model Photo{
   id       Int    @id @default(autoincrement())
   photoUrl String
   profileId Int
   profile Profile @relation(fields: [profileId], references: [id])
+
+  @@map("photos")
 }
