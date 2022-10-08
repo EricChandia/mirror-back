@@ -1,6 +1,7 @@
 import { prisma } from './../database/prismaClient';
 import { Profile } from '@prisma/client';
 import { CreateProfileData, UpdateProfileData } from '../types/profileTypes';
+import { connection } from "../database/postgres";
 
 export async function findById(id: number):Promise<Profile> {
     return prisma.profile.findUnique({
@@ -44,3 +45,12 @@ export async function update(id: number, profileData: UpdateProfileData) {
         }
     });
   }
+
+export async function find10Profiles(userId: number, offset: number) {
+    const result = await connection.query(
+      'select * from profiles where "userId" != $1 limit 10 offset $2',
+      [userId, offset]
+    );
+  
+    return result.rows;
+}

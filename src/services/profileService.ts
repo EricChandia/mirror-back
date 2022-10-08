@@ -59,10 +59,20 @@ export async function findProfileOrThrow(id: number) {
 
 }
 
+async function find10Profiles(userId:number) {
+    const offset = 0;
+
+    const profiles = await profileRepoitory.find10Profiles(userId, offset);
+
+    return profiles;
+}
+
+
 export const profileService = {
     getProfile,
     getUserProfile,
     createProfile,
     deleteProfile,
-    updateProfile
+    updateProfile,
+    find10Profiles
 };

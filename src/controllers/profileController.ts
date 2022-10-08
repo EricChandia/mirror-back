@@ -12,8 +12,7 @@ export async function getProfile(req: Request, res: Response) {
 }
 
 export async function getUserProfile(req: Request, res: Response) {
-    
-    const { userId } = req.params;
+    const { id:userId } = res.locals.user;
 
     const profile = await profileService.getUserProfile(Number(userId));
 
@@ -24,12 +23,18 @@ export async function getUserProfile(req: Request, res: Response) {
 
 
 export async function createProfile(req: Request, res: Response) {
-    
-    const createProfileData:CreateProfileData = req.body;
+    const { id } = res.locals.user;
+    const data:any = req.body;
+
+    console.log(id);
+    console.log(data);
+
+    const createProfileData: CreateProfileData = { ...data, userId: id }
 
     const profileCreated = await profileService.createProfile(createProfileData);
 
     res.status(201).send(profileCreated);
+    //res.sendStatus(201);
 }
 
 
@@ -48,5 +53,13 @@ export async function updateProfile(req: Request, res: Response) {
 
     const updatedProfile = await profileService.updateProfile(Number(id), updateProfileData);
     res.status(200).send(updatedProfile);
+}
+
+export async function find10Profiles(req: Request, res: Response) {
+    const { id:userId } = res.locals.user;
+
+
+    const profiles = await profileService.find10Profiles(Number(userId));
+    res.status(200).send(profiles);
 }
 
