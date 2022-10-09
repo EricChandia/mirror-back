@@ -46,11 +46,32 @@ export async function update(id: number, profileData: UpdateProfileData) {
     });
   }
 
-export async function find10Profiles(userId: number, offset: number) {
-    const result = await connection.query(
-      'select * from profiles where "userId" != $1 limit 10 offset $2',
-      [userId, offset]
-    );
+export async function find10Profiles(userId: number, dislikesIds: Array<number>, likesIds: Array<number>) {
+    // const result = await connection.query(
+    //   'select * from profiles where "userId" != $1 limit 10 offset $2',
+    //   [userId, offset]
+    // );
   
-    return result.rows;
+    // return result.rows;
+
+    return prisma.profile.findMany({
+      orderBy: [
+        {
+          userId: 'asc'
+        }
+      ],
+      where: {
+        userId:{
+          not: userId
+        },
+        id: {
+          notIn: [...dislikesIds, ...likesIds],
+        }
+
+      },
+      include: {
+        photos: true
+      },
+      take: 10
+    });
 }

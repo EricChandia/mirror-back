@@ -1,12 +1,14 @@
 import { Profile } from "@prisma/client";
-import * as profileRepoitory from "../repositories/profileRepository";
+import * as profileRepository from "../repositories/profileRepository";
 import { CreateProfileData, UpdateProfileData } from "../types/profileTypes";
 import {
     conflictError,
     notFoundError,
     unauthorizedError
   } from '../utils/errorUtils';
-  
+  import {photoService} from "../services/photoService";
+  import {dislikeService} from "../services/dislikeService";
+import { likeService } from "./likeService";
 
 async function getProfile(id: number) {
     
@@ -16,7 +18,7 @@ async function getProfile(id: number) {
 
 async function getUserProfile(userId: number) {
     
-    const profile = await profileRepoitory.findByUserId(userId);
+    const profile = await profileRepository.findByUserId(userId);
     if(!profile){
         throw notFoundError("This profile does not exists");
     }
@@ -26,31 +28,31 @@ async function getUserProfile(userId: number) {
 
 async function createProfile(createProfileData: CreateProfileData) {
 
-    const profile = await profileRepoitory.findByUserId(createProfileData.userId);
+    const profile = await profileRepository.findByUserId(createProfileData.userId);
     if(profile){
         throw conflictError("Profile already exists for this user");
     }
     
-    return profileRepoitory.insertProfile(createProfileData);
+    return profileRepository.insertProfile(createProfileData);
 }
 
 async function deleteProfile(id: number) {
     await findProfileOrThrow(id);
 
-    return await profileRepoitory.deleteProfile(id);
+    return await profileRepository.deleteProfile(id);
 
 }
 
 async function updateProfile(id:number, updateProfileData: UpdateProfileData) {
     await findProfileOrThrow(id);
 
-    return await profileRepoitory.update(id, updateProfileData);
+    return await profileRepository.update(id, updateProfileData);
 }
 
 
 export async function findProfileOrThrow(id: number) {
     
-    const profile = await profileRepoitory.findById(id);
+    const profile = await profileRepository.findById(id);
     if(!profile){
         throw notFoundError("This profile does not exists");
     }
@@ -60,9 +62,24 @@ export async function findProfileOrThrow(id: number) {
 }
 
 async function find10Profiles(userId:number) {
-    const offset = 0;
+    //const offset = 0;
+    const {id:profileId} = await profileRepository.findByUserId(userId);
+    const dislikes = await dislikeService.getDislikesByProfileId(profileId);
+    const likes = await likeService.getLikesByProfileId(profileId);
 
-    const profiles = await profileRepoitory.find10Profiles(userId, offset);
+    let dislikesIds:Array<number> = [];
+    dislikes.map(dislike => {
+        dislikesIds.push(dislike.whoReceivedId);
+    });
+
+    let likesIds:Array<number> = [];
+    likes.map(like => {
+        likesIds.push(like.whoReceivedId);
+    });
+
+
+    //console.log(dislikesIds);
+    const profiles = await profileRepository.find10Profiles(userId, dislikesIds, likesIds);
 
     return profiles;
 }

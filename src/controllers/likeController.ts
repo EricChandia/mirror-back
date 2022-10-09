@@ -5,9 +5,11 @@ import { CreateLikeData } from '../types/likeTypes';
 
 export async function createLike(req: Request, res: Response) {
     
-    const createLikeData:CreateLikeData = req.body;
+    // const createLikeData:CreateLikeData = req.body;
+    const {id: userId} = res.locals.user;
+    const { id:whoReceivedId } = req.params;
 
-    await likeService.createLike(createLikeData);
+    await likeService.createLike(userId, Number(whoReceivedId));
 
     res.sendStatus(200);
 }

@@ -21,6 +21,9 @@ export async function getLikesByProfileId(whoLikedId: number) {
     return prisma.like.findMany({
       where: {
         whoLikedId
+      },
+      select: {
+        whoReceivedId: true
       }
     });
 }

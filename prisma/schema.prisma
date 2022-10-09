@@ -35,6 +35,9 @@ model Profile {
   firstMatch Match[] @relation("firstProfile")
   secondMatch Match[] @relation("secondProfile")
 
+  dislikeGiven Dislike[] @relation("whoDislike")
+  dislikeReceived Dislike[] @relation("whoReceived")
+
   photos Photo []
 
   @@map("profiles")
@@ -64,6 +67,17 @@ model Match{
    @@map("matches")
 }
 
+
+model Dislike{
+  id       Int    @id @default(autoincrement())
+  whoDislikeId Int
+  whoReceivedId Int
+
+  firstProfile Profile @relation(name:"whoDislike", fields: [whoDislikeId], references: [id])
+  secondProfile Profile @relation(name:"whoReceived", fields: [whoReceivedId], references: [id])
+
+   @@map("dislikes")
+}
 
 model Photo{
   id       Int    @id @default(autoincrement())
