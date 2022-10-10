@@ -5,11 +5,11 @@ export const createProfileSchema = Joi.object<CreateProfileData>({
   name: Joi.string().required(),
   gender: Joi.string().required(),
   lookingFor: Joi.string().required(),
-  age: Joi.string(),
-  description: Joi.string(),
+  age: Joi.string().optional().allow(""),
+  description: Joi.string().optional().allow(""),
   identification: Joi.string().optional().allow(""),
-  occupation: Joi.string(),
-  schooling: Joi.string()
+  occupation: Joi.string().optional().allow(""),
+  schooling: Joi.string().optional().allow("")
 });
 
 

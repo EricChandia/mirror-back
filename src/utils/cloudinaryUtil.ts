@@ -38,7 +38,7 @@ const uploadStream = (fileStream:any, name:any) => {
 
 export const uploadImage = async (fileStream:any, fileName:any)=>{
     try{
-        const minifiedFile = await sharp(fileStream).jpeg( { quality: 50 }).toBuffer(); //reduce quality of the image in 50%, convert to jpeg
+        const minifiedFile = await sharp(fileStream).jpeg( { quality: 30 }).toBuffer(); //reduce quality of the image in 50%, convert to jpeg
         const result = await uploadStream(minifiedFile, fileName); 
         return result;
     }catch(error){

@@ -49,13 +49,14 @@ export async function update(id: number, profileData: UpdateProfileData) {
     });
   }
 
-export async function find10Profiles(userId: number, dislikesIds: Array<number>, likesIds: Array<number>, lookingFor: string) {
+export async function find10Profiles(userId: number, dislikesIds: Array<number>, likesIds: Array<number>) {
     // const result = await connection.query(
     //   'select * from profiles where "userId" != $1 limit 10 offset $2',
     //   [userId, offset]
     // );
   
     // return result.rows;
+
 
     return prisma.profile.findMany({
       orderBy: [
@@ -70,11 +71,41 @@ export async function find10Profiles(userId: number, dislikesIds: Array<number>,
         id: {
           notIn: [...dislikesIds, ...likesIds],
         },
-        gender: lookingFor
       },
       include: {
         photos: true
       },
       take: 10
     });
+}
+
+export async function find10ProfilesByLookingFor(userId: number, dislikesIds: Array<number>, likesIds: Array<number>, lookingFor: string) {
+  // const result = await connection.query(
+  //   'select * from profiles where "userId" != $1 limit 10 offset $2',
+  //   [userId, offset]
+  // );
+
+  // return result.rows;
+
+  
+  return prisma.profile.findMany({
+    orderBy: [
+      {
+        userId: 'asc'
+      }
+    ],
+    where: {
+      userId:{
+        not: userId
+      },
+      id: {
+        notIn: [...dislikesIds, ...likesIds],
+      },
+      gender: lookingFor
+    },
+    include: {
+      photos: true
+    },
+    take: 10
+  });
 }

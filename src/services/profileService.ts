@@ -80,11 +80,12 @@ async function find10Profiles(userId:number) {
         likesIds.push(like.whoReceivedId);
     });
 
+    if(lookingFor === "Any"){
+        return await profileRepository.find10Profiles(userId, dislikesIds, likesIds);    
+    }
 
-    //console.log(dislikesIds);
-    const profiles = await profileRepository.find10Profiles(userId, dislikesIds, likesIds, lookingFor);
+    return await profileRepository.find10ProfilesByLookingFor(userId, dislikesIds, likesIds, lookingFor);
 
-    return profiles;
 }
 
 
