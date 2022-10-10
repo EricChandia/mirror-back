@@ -4,22 +4,22 @@ import { CreateMatchData } from '../types/matchTypes';
 
 
 
-export async function createMatch(req: Request, res: Response) {
+// export async function createMatch(req: Request, res: Response) {
     
-    const createMatchData:CreateMatchData = req.body;
+//     const createMatchData:CreateMatchData = req.body;
 
-    await matchService.createMatch(createMatchData);
+//     await matchService.createMatch(createMatchData);
 
-    res.sendStatus(201);
-}
+//     res.sendStatus(201);
+// }
 
 
 
 export async function getAllProfileMatchs(req: Request, res: Response) {
     
-    const { id } = req.params;
+    const { id:userId }  = res.locals.user;
 
-    const profileMatchs = await matchService.getAllProfileMatchs(Number(id));
+    const profileMatchs = await matchService.getAllProfileMatchs(Number(userId));
 
     res.status(200).send(profileMatchs);
 }

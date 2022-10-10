@@ -12,7 +12,8 @@ async function insertPhoto(userId: number, photoUrl: string) {
 
 async function getProfilePhotos(userId: number) {
 
-    const { id }:Profile = await profileService.getUserProfile(userId);
+    //console.log(userId);
+    const { id } = await profileService.getUserProfile(userId);
 
 
     return await photoRepository.getProfilePhotos(id);

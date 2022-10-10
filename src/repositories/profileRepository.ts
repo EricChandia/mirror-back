@@ -10,9 +10,12 @@ export async function findById(id: number):Promise<Profile> {
 }
 
 
-export async function findByUserId(userId: number):Promise<Profile> {
+export async function findByUserId(userId: number) {
   return prisma.profile.findFirst({
-    where: { userId }
+    where: { userId },
+    include: {
+      photos: true
+    }
   });
 }
 
@@ -46,7 +49,7 @@ export async function update(id: number, profileData: UpdateProfileData) {
     });
   }
 
-export async function find10Profiles(userId: number, dislikesIds: Array<number>, likesIds: Array<number>) {
+export async function find10Profiles(userId: number, dislikesIds: Array<number>, likesIds: Array<number>, lookingFor: string) {
     // const result = await connection.query(
     //   'select * from profiles where "userId" != $1 limit 10 offset $2',
     //   [userId, offset]
@@ -66,8 +69,8 @@ export async function find10Profiles(userId: number, dislikesIds: Array<number>,
         },
         id: {
           notIn: [...dislikesIds, ...likesIds],
-        }
-
+        },
+        gender: lookingFor
       },
       include: {
         photos: true

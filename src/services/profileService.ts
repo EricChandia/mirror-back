@@ -63,7 +63,10 @@ export async function findProfileOrThrow(id: number) {
 
 async function find10Profiles(userId:number) {
     //const offset = 0;
-    const {id:profileId} = await profileRepository.findByUserId(userId);
+    const profile = await profileRepository.findByUserId(userId);
+    const {id:profileId} = profile;
+    const { lookingFor } = profile;
+
     const dislikes = await dislikeService.getDislikesByProfileId(profileId);
     const likes = await likeService.getLikesByProfileId(profileId);
 
@@ -79,7 +82,7 @@ async function find10Profiles(userId:number) {
 
 
     //console.log(dislikesIds);
-    const profiles = await profileRepository.find10Profiles(userId, dislikesIds, likesIds);
+    const profiles = await profileRepository.find10Profiles(userId, dislikesIds, likesIds, lookingFor);
 
     return profiles;
 }

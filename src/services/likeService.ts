@@ -8,6 +8,7 @@ import {
     notFoundError,
     unauthorizedError
   } from '../utils/errorUtils';
+import { matchService } from "./matchService";
 import { findProfileOrThrow, profileService } from "./profileService";
 
 
@@ -18,8 +19,15 @@ async function createLike(userId: number, whoReceivedId: number) {
     await findProfileOrThrow(whoReceivedId);
 
     const createLikeData:CreateLikeData = { whoLikedId, whoReceivedId };
+    const createdLike:Object = await likeRepository.insertLike(createLikeData);
 
-    return await likeRepository.insertLike(createLikeData);
+    const match = await checkIfItMatch(whoLikedId, whoReceivedId);
+
+    if(match === true){
+        matchService.createMatch(whoLikedId, whoReceivedId);
+    }
+
+    return {...createdLike, match};
 }
 
 
@@ -33,13 +41,13 @@ async function getLikesByProfileId(whoLikedId: number) {
 
 async function checkIfItMatch(userProfileId: number, likeGivenProfileId: number) {
     const match = await likeRepository.checkIfItMatch(userProfileId, likeGivenProfileId);
+    console.log(match);
 
-    if(!match){
-        return false;
+    if(match.length>0){
+        return true;
     }
-    
-    
-    return true;
+
+    return false;
 }
 
   

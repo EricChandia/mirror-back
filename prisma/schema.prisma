@@ -19,13 +19,17 @@ model User {
 }
 
 
-
-
 model Profile {
   id       Int    @id @default(autoincrement())
   name    String
+  age String
   occupation String
   schooling String
+  description String
+  gender String
+  identification String
+  lookingFor String
+
   userId Int
   user User @relation(fields: [userId], references: [id])
 

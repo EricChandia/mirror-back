@@ -10,15 +10,40 @@ export async function findById(id: number):Promise<Match> {
 }
 
 
-export async function insertMatch(match: CreateMatchData) {
+export async function insertMatch(firstProfileId: number, secondProfileId: number) {
     return prisma.match.create({
-      data: match
+      data: {
+        firstProfileId,
+        secondProfileId
+      }
     });
 }
 
 
 export async function getAllProfileMatchs(profileId: number) {
   return prisma.match.findMany({
-    where: {id: profileId}
+    where: {
+      OR: [
+        {
+          firstProfileId: profileId
+        },
+        { 
+          secondProfileId: profileId
+        }
+      ],
+    },
+    include: {
+      secondProfile: {
+        include: {
+          photos: true
+        }
+      },
+      firstProfile: {
+        include: {
+          photos: true
+        }
+
+      }
+    }
   });
 }

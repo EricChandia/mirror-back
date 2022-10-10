@@ -9,9 +9,9 @@ export async function createLike(req: Request, res: Response) {
     const {id: userId} = res.locals.user;
     const { id:whoReceivedId } = req.params;
 
-    await likeService.createLike(userId, Number(whoReceivedId));
+    const createdLike = await likeService.createLike(userId, Number(whoReceivedId));
 
-    res.sendStatus(200);
+    res.status(201).send(createdLike);
 }
 
 
