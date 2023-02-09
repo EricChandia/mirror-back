@@ -1,7 +1,7 @@
 # <p align = "center"> Mirror </p>
 
 <p align="center">
-   <img src="https://user-images.githubusercontent.com/72531277/178094665-f46c6a55-c821-42a0-bb9c-d5dd5f2d69fa.png"/>
+   <img src="https://github.com/EricChandia/mirror-back/blob/main/src/ksnip_20230209-015209.png"/>
 </p>
 
 <p align = "center">
