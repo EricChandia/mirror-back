@@ -13,6 +13,8 @@
 ##  :clipboard: Descrição
 O Mirror é uma plataforma online de relacionamentos, com ele é possível encontrar o seu par ideal em poucos passos :). Para isso basta fazer o cadastro, preencher as informações básicas, subir aquelas fotos maneiras e você estará pronto para se relacionar.
 
+Você pode acessa-lo diretamente pelo link: https://mirror-pi.vercel.app/
+
 ***
 
 ## :computer:	 Tecnologias e Conceitos
