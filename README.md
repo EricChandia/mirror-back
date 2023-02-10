@@ -24,6 +24,7 @@ Esta é a documentação apenas do Front-End, você pode acessar o Back-End nest
 - REST APIs
 - Node.js com express
 - TypeScript
+- Autenticação com JWT
 - Postgres com Prisma
 - React.js
 - Mongodb
