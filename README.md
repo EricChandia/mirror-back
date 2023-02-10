@@ -18,17 +18,22 @@ O Mirror é uma plataforma online de relacionamentos, com ele é possível encon
 ## :computer:	 Tecnologias e Conceitos
 
 - REST APIs
-- Node.js
+- Node.js com express
 - TypeScript
-- Postgres with Prisma
-- React
+- Postgres com Prisma
+- React.js
+- Mongodb
+- Cloudinary para upload de fotos
 
 ***
 
+## :rocket: Pré requisitos
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Npm](https://www.npmjs.com/).
+Caso quiser editar o código, irá precisar de um bom editor como o [VSCode](https://code.visualstudio.com/)
+
+
 ## :rocket: Rotas
-
-
-
 
 <details><summary>AUTENTICAÇÃO</summary>
    
@@ -37,8 +42,8 @@ POST /signup
     - Cadastra um novo usuário.
     - headers: {}
     - body:{
-      "email": "exemplo@gmail.com",
-      "senha": "**********"
+      "email": "A String (a valid email)",
+      "senha": "String (A valid password)"
     }
 ```
 
@@ -102,6 +107,7 @@ POST /updateProfile/:id
         schooling: "Schooling"
     }
 ```
+   
 ```yml
 POST /find10Profiles
     - Procura por 10 profiles diferentes da profile do usuário logado atual.
@@ -146,6 +152,7 @@ POST /likeProfile/:id
     - Rota autenticada.
     - headers: {}
 ```
+   
 ```yml
 POST /checkIfItMatch/:id
     - Verifica e retorna se as profiles passadas deram match.
@@ -156,27 +163,33 @@ POST /checkIfItMatch/:id
       likeGivenProfileId: number
     }
 ```
+   
 </details>
 
 <details><summary>DISLIKES</summary>
+   
 ```yml
 POST /dislikeProfile/:id
     - Cadastra um dislike entre o usuário que está logado e o usuário recebido por params.
     - Rota autenticada.
     - headers: {}
 ```
+   
 </details>
 
 <details><summary>MATCH</summary>
+   
 ```yml
 GET /getAllProfileMatchs
     - Retorna todos os matchs que a profile logada possui.
     - Rota autenticada.
     - headers: {}
 ```
+   
 </details>
 
 <details><summary>CHAT</summary>
+   
 ```yml
 POST /insertMessage
     - Insere uma mensagem no chat entre a profile logada e a profile recebida por body.
@@ -188,6 +201,7 @@ POST /insertMessage
       message: "text of message"
    }
 ```
+   
 ```yml
 GET /getChatMessages/:id
     - Retorna todos as mensagens do chat correspondente ao matchId enviado por params.
@@ -208,6 +222,9 @@ git clone https://github.com/EricChandia/mirror-back/
 
 Entrar na pasta do projeto.
 
+Crie um arquivo .env na pasta root do projeto, o arquivo precisará seguir o padrão informado no arquivo .env.example
+
+
 Depois, dentro da pasta, rode o seguinte comando para instalar as dependencias.
 
 ```
@@ -218,5 +235,7 @@ Finalizado o processo, é só inicializar o servidor
 ```
 npm start
 ```
+
+O servidor rodará na porta 5000 por padrão.
 
  
