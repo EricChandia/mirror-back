@@ -15,6 +15,8 @@ O Mirror é uma plataforma online de relacionamentos, com ele é possível encon
 
 Você pode acessa-lo diretamente pelo link: https://mirror-pi.vercel.app/
 
+Esta é a documentação apenas do Front-End, você pode acessar o Back-End neste link: https://github.com/EricChandia/mirror-front
+
 ***
 
 ## :computer:	 Tecnologias e Conceitos
