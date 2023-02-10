@@ -27,7 +27,12 @@ O Mirror é uma plataforma online de relacionamentos, com ele é possível encon
 
 ## :rocket: Rotas
 
-```yml
+
+
+
+<details><summary>AUTENTICAÇÃO</summary>
+   
+   ```yml
 POST /signup
     - Cadastra um novo usuário.
     - headers: {}
@@ -46,15 +51,153 @@ POST /signin
       "senha": "**********"
     }
 ```
-```yml
+
+</details>
+
+
+
+<details><summary>PROFILES</summary>
+   
+   ```yml
 POST /createProfile
     - Cria um perfil para o usuário com as informações preenchidas.
+    - Rota autenticada.
     - headers: {}
     - body:{
-      "email": "exemplo@gmail.com",
-      "senha": "**********"
+        name: "Name",
+        gender: "Men/Woman",
+        lookingFor: "Men/Woman/Any",
+        age: "Number",
+        description: "Text Description",
+        identification: "You can specify more about your gender here",
+        occupation: "Job occupation",
+        schooling: "Schooling"
     }
 ```
+```yml
+GET /getUserProfile
+    - Obtem os dados do perfil do usuário.
+    - Rota autenticada.
+    - Precisa apenas estar autenticado na plataforma.
+    }
+```
+```yml
+POST /deleteProfile/:id
+    - Deleta o perfil do usuário na plataforma.
+    - Rota autenticada.
+    }
+```
+```yml
+POST /updateProfile/:id
+    - Deleta o perfil do usuário na plataforma.
+    - Rota autenticada.
+    - body:{
+        name: "Name",
+        gender: "Men/Woman",
+        lookingFor: "Men/Woman/Any",
+        age: "Number",
+        description: "Text Description",
+        identification: "You can specify more about your gender here",
+        occupation: "Job occupation",
+        schooling: "Schooling"
+    }
+```
+```yml
+POST /find10Profiles
+    - Procura por 10 profiles diferentes da profile do usuário logado atual.
+    - Rota autenticada.
+    }
+```
+
+</details>
+
+
+<details><summary>PHOTOS</summary>
+
+   
+```yml
+POST /uploadPhoto
+    - Faz o upload da foto enviada para a nuvem.
+    - Rota autenticada.
+    - headers: {}
+```
+   
+```yml
+POST /getProfilePhotos
+    - Retorna todas as fotos enviadas pelo usuário.
+    - Rota autenticada.
+    - headers: {}
+```
+   
+</details>
+
+<details><summary>LIKES</summary>
+   
+```yml
+POST /likeProfile/:id
+    - Cadastra um like entre o usuário logado e a profile recebida por params.
+    - Rota autenticada.
+    - headers: {}
+```
+   
+```yml
+POST /likeProfile/:id
+    - Retorna os likes que a profile passada por params possui.
+    - Rota autenticada.
+    - headers: {}
+```
+```yml
+POST /checkIfItMatch/:id
+    - Verifica e retorna se as profiles passadas deram match.
+    - Rota autenticada.
+    - headers: {}
+    - body: {
+      userProfileId: number
+      likeGivenProfileId: number
+    }
+```
+</details>
+
+<details><summary>DISLIKES</summary>
+```yml
+POST /dislikeProfile/:id
+    - Cadastra um dislike entre o usuário que está logado e o usuário recebido por params.
+    - Rota autenticada.
+    - headers: {}
+```
+</details>
+
+<details><summary>MATCH</summary>
+```yml
+GET /getAllProfileMatchs
+    - Retorna todos os matchs que a profile logada possui.
+    - Rota autenticada.
+    - headers: {}
+```
+</details>
+
+<details><summary>CHAT</summary>
+```yml
+POST /insertMessage
+    - Insere uma mensagem no chat entre a profile logada e a profile recebida por body.
+    - Rota autenticada.
+    - headers: {}
+    - body: {
+      matchId: number (matchId of profiles)
+      whoReceivedId: number (id of profile who received the message)
+      message: "text of message"
+   }
+```
+```yml
+GET /getChatMessages/:id
+    - Retorna todos as mensagens do chat correspondente ao matchId enviado por params.
+    - Rota autenticada.
+    - headers: {}
+```
+</details>
+
+
+
 
 ## 🏁 Rodando a aplicação
 Primeiro, faça o clone desse repositório na sua maquina:
